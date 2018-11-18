@@ -17,7 +17,7 @@ server.route({
 
 server.route({
     method: 'GET',
-    path: '/{name}',
+    path: '/user/{name}',
     handler: (request, h) => {
         return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
     }
