@@ -23,6 +23,12 @@ server.route({
     }
 });
 
+// Static Routes
+/*
+server.register(require('inert'),(err) => {
+});
+*/
+
 // Start Server
 const init = async () => {
     await server.start();
