@@ -24,23 +24,17 @@ server.route({
 });
 
 // Static Routes
-/*
-server.register(require('inert') => {
-
-
+server.route({
+    method: 'GET',
+    path: '/about',
+    handler: (request, h) => {
+      return h.file('./public/about.html');
+    }
 });
-*/
 
 // Start Server
 const init = async () => {
     await server.register(require('inert'));
-    server.route({
-      method: 'GET',
-      path: '/about',
-      handler: (request, h) => {
-        return h.file('./public/about.html');
-      }
-    });
   
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
