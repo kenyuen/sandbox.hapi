@@ -13,6 +13,20 @@ mongodb://<dbuser>:<dbpassword>@ds211694.mlab.com:11694/sandbox
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
+
+Set up from scratch
+```
+npm init
+
+npm install --save hapi
+npm install --save nodemon
+npm install --save mongoose 
+npm install --save apollo-server-hapi
+npm install --save graphql
+npm install --save inert
+npm install --save vision hapi-swagger 
+
+```
 ### Install mongoDb
 ```bash
 sudo apt install -y mongodb
@@ -24,7 +38,7 @@ sudo systemctl status mongodb
 
 ### add npm packages
 ```bash
-npm add hapi 
+npm add hapi --save
 npm add nodemon
 npm add mongoose
 npm add apollo-server-hapi
