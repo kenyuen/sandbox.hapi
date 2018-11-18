@@ -11,7 +11,8 @@ server.route({
     method: 'GET',
     path: '/',
     handler: (request, h) => {
-        return 'Hello world! Welcome!';
+        //return 'Hello world! Welcome!';
+        return h.view('index');
     }
 });
 
@@ -28,14 +29,31 @@ server.route({
     method: 'GET',
     path: '/about',
     handler: (request, h) => {
-      return h.file('./public/about.html');
+        return h.file('./public/about.html');
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/image',
+    handler: (request, h) => {
+        return h.file('./public/hapi.png');
     }
 });
 
 // Start Server
-const init = async () => {
+const init = async() => {
     await server.register(require('inert'));
-  
+    await server.register(require('vision'));
+
+    // Vision Templates or Views
+    server.views({
+        engines: {
+            html: require('handlebars')
+        },
+        path: __dirname + '/views'
+    });
+
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
 };
