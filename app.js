@@ -6,21 +6,39 @@ const server = Hapi.server({
     host: '0.0.0.0'
 });
 
-// Add Routes
+// Home Routes
 server.route({
     method: 'GET',
     path: '/',
     handler: (request, h) => {
         //return 'Hello world! Welcome!';
-        return h.view('index');
+        return h.view('index',{
+            name:'John Doe'
+        });
     }
 });
 
+// Dynamic Routes
 server.route({
     method: 'GET',
     path: '/user/{name}',
     handler: (request, h) => {
         return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
+    }
+});
+
+// Task Route
+server.route({
+    method: 'GET',
+    path: '/tasks',
+    handler: (request, h) => {
+        return h.view('tasks',{
+            tasks:[
+                {text:'Task One'},
+                {text:'Task Two'},
+                {text:'Task Three'}
+            ]
+        });
     }
 });
 
