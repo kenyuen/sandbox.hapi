@@ -16,16 +16,7 @@ sudo apt-get install -y nodejs
 
 Set up from scratch
 ```
-npm init
-
-npm install --save hapi
-npm install --save nodemon
-npm install --save mongoose 
-npm install --save apollo-server-hapi
-npm install --save graphql
-npm install --save inert
-npm install --save vision hapi-swagger 
-
+npm install
 ```
 ### Install mongoDb
 ```bash
