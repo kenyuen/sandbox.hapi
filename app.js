@@ -1,5 +1,6 @@
 const Hapi = require('hapi');
 const mongoose = require('mongoose');
+const Task = require('./models/Task');
 
 // mongoose to mLab
 mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', {
@@ -8,10 +9,6 @@ mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', {
 	.then(() => console.log('MongoDB connected...'))
 	.catch(err => console.error(err));
 
-// Create Task Model
-const Task = mongoose.model('Task', {
-	text: String
-});
 
 // Init Server
 const server = Hapi.server({
@@ -43,35 +40,50 @@ server.route({
 // POST Task Route
 server.route({
 	method: 'POST',
-	path:'/tasks',
-	handler: (request, h) =>{
-		let text = request.payload.text;
-		let newTask = new Task({text:text});
-		newTask.save((err, task) => {
-			if(err) return console.log(err);
-			return h.redirect().location('tasks');
-		})
+	path: '/api/v1/tasks',
+	handler: (request, h) => {
+		let text  = request.payload.text;
+		let newTask = new Task({
+			text
+		});
+		return Task.save();
+		//return h.redirect().location('tasks');
 	}
 });
 
 // GET Task Route
 server.route({
 	method: 'GET',
+	path: '/api/v1/tasks',
+	handler: (request, h) => {
+		return Task.find();
+	}
+});
+
+server.route({
+	method: 'GET',
 	path: '/tasks',
 	handler: (request, h) => {
-/*		let tasks = Task.find((err, tasks) => {
-			//console.log(tasks)
-			if (err) return handleError(err);
-	*/
-  //console.log(tasks);
-    return Task.find();
-    /*
-			return h.view('tasks', {
-        tasks:[
-          {text:'TestOne'}]
-          });
-          */
-   }
+		/*		let tasks = Task.find((err, tasks) => {
+					//console.log(tasks)
+					if (err) return handleError(err);
+			*/
+		//console.log(tasks);
+		//   return Task.find();
+		return h.view('tasks', Task.find());
+		/*
+		return h.view('tasks', {
+			tasks: [{
+					text: 'TestOne'
+				},
+				{
+					text: 'TestTwo'
+				}
+			]
+		});
+
+		*/
+	}
 });
 
 // Static Routes
@@ -92,7 +104,7 @@ server.route({
 });
 
 // Start Server
-const init = async() => {
+const init = async () => {
 	await server.register(require('inert'));
 	await server.register(require('vision'));
 
