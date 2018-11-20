@@ -16,48 +16,10 @@ const server = Hapi.server({
 });
 
 // mongoose to mLab
-mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', {
-		useNewUrlParser: true
-	})
-	.then(() => console.log('MongoDB connected...'))
-	.catch(err => console.error(err));
+mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', { useNewUrlParser: true });
 
-// Home Routes
-server.route({
-	method: 'GET',
-	path: '/',
-	handler: (request, h) => {
-		//return 'Hello world! Welcome!';
-		return h.view('index', {
-			name: 'John Doe'
-		});
-	}
-});
-
-// Dynamic Routes
-server.route({
-	method: 'GET',
-	path: '/user/{name}',
-	handler: (request, h) => {
-		return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
-	}
-});
-
-// Static Routes
-server.route({
-	method: 'GET',
-	path: '/about',
-	handler: (request, h) => {
-		return h.file('./public/about.html');
-	}
-});
-
-server.route({
-	method: 'GET',
-	path: '/image',
-	handler: (request, h) => {
-		return h.file('./public/hapi.png');
-	}
+mongoose.connection.once('open', () => {
+	console.log('MongoDB connected...');
 });
 
 // Start Server
@@ -76,10 +38,10 @@ const init = async () => {
 			}
 		}
 	]);
-/*
+
 	// graphQL
 	await server.register({
-		plugin: graphiqlHapi,
+		plubin: graphiqlHapi,
 		options: {
 			path: '/graphiql',
 			graphiqlOptions: {
@@ -103,16 +65,6 @@ const init = async () => {
 			}
 		}
 	});
-*/
-	
-	// Vision Templates or Views
-	server.views({
-		engines: {
-			html: require('handlebars')
-		},
-		path: __dirname + '/views'
-	});
-	
 
 	// routes
 	server.route([
