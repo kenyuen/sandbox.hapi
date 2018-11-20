@@ -1,0 +1,30 @@
+{
+  "name": "sandbox.hapi",
+  "version": "1.0.0",
+  "description": "sandbox playground",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenyuen/sandbox.hapi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenyuen/sandbox.hapi/issues"
+  },
+  "homepage": "https://github.com/kenyuen/sandbox.hapi#readme",
+  "dependencies": {
+    "apollo-server-hapi": "^1.4.0",
+    "graphql": "^0.13.2",
+    "hapi": "^17.7.0",
+    "hapi-swagger": "^9.1.3",
+    "inert": "^5.1.2",
+    "mongoose": "^5.3.12",
+    "nodemon": "^1.18.6",
+    "vision": "^5.4.3"
+  }
+}
