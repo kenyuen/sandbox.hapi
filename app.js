@@ -25,6 +25,7 @@ mongoose.connection.once('open', () => {
 // Start Server
 const init = async () => {
 
+	//Swagger
 	await server.register([
 		Inert,
 		Vision,
@@ -41,7 +42,7 @@ const init = async () => {
 
 	// graphQL
 	await server.register({
-		plubin: graphiqlHapi,
+		plugin: graphiqlHapi,
 		options: {
 			path: '/graphiql',
 			graphiqlOptions: {
@@ -83,7 +84,7 @@ const init = async () => {
 			method: 'POST',
 			path: '/api/v1/tasks',
 			config: {
-				description: 'Create a tasj',
+				description: 'Create a task',
 				tags: ['api', 'v1', 'task']
 			},
 			handler: (req, reply) => {
