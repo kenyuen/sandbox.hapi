@@ -32,19 +32,21 @@ sudo systemctl status mongodb
 npm add hapi --save
 npm add nodemon
 npm add mongoose
-npm add apollo-server-hapi
-npm add graphql
+npm add apollo-server-hapi@1.4.0
+npm add graphql@^0.13.0.2
 npm add inert
 npm add vision hapi-swagger 
 ```
 
 ## to Run
-
 ```bash
 npm start
 
 ## If there's a need to clean up for any reason run the following
 npm uninstall *
 ```
+
+Can access Swagger and GraphQL
+
 
 
