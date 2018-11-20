@@ -42,4 +42,9 @@ npm add vision hapi-swagger
 
 ```bash
 npm start
+
+## If there's a need to clean up for any reason run the following
+npm uninstall *
 ```
+
+

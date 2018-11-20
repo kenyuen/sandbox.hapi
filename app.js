@@ -1,6 +1,19 @@
 const Hapi = require('hapi');
 const mongoose = require('mongoose');
+const { graphqlHapi, graphiqlHapi } = require('apollo-server-hapi');
+const schema = require('./graphql/schema');
 const Task = require('./models/Task');
+
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
+const Pack = require('./package');
+
+// Init Server
+const server = Hapi.server({
+	port: 3000,
+	host: '0.0.0.0'
+});
 
 // mongoose to mLab
 mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', {
@@ -8,13 +21,6 @@ mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', {
 	})
 	.then(() => console.log('MongoDB connected...'))
 	.catch(err => console.error(err));
-
-
-// Init Server
-const server = Hapi.server({
-	port: 3000,
-	host: '0.0.0.0'
-});
 
 // Home Routes
 server.route({
@@ -37,55 +43,6 @@ server.route({
 	}
 });
 
-// POST Task Route
-server.route({
-	method: 'POST',
-	path: '/api/v1/tasks',
-	handler: (request, h) => {
-		let text  = request.payload.text;
-		let newTask = new Task({
-			text
-		});
-		return Task.save();
-		//return h.redirect().location('tasks');
-	}
-});
-
-// GET Task Route
-server.route({
-	method: 'GET',
-	path: '/api/v1/tasks',
-	handler: (request, h) => {
-		return Task.find();
-	}
-});
-
-server.route({
-	method: 'GET',
-	path: '/tasks',
-	handler: (request, h) => {
-		/*		let tasks = Task.find((err, tasks) => {
-					//console.log(tasks)
-					if (err) return handleError(err);
-			*/
-		//console.log(tasks);
-		//   return Task.find();
-		return h.view('tasks', Task.find());
-		/*
-		return h.view('tasks', {
-			tasks: [{
-					text: 'TestOne'
-				},
-				{
-					text: 'TestTwo'
-				}
-			]
-		});
-
-		*/
-	}
-});
-
 // Static Routes
 server.route({
 	method: 'GET',
@@ -105,9 +62,49 @@ server.route({
 
 // Start Server
 const init = async () => {
-	await server.register(require('inert'));
-	await server.register(require('vision'));
 
+	await server.register([
+		Inert,
+		Vision,
+		{
+			plugin: HapiSwagger,
+			options: {
+				info: {
+					title: 'Task API Documentation',
+					version: Pack.version
+				}
+			}
+		}
+	]);
+/*
+	// graphQL
+	await server.register({
+		plugin: graphiqlHapi,
+		options: {
+			path: '/graphiql',
+			graphiqlOptions: {
+				endpointURL: '/graphql'
+			},
+			route: {
+				cors: true
+			}
+		}
+	});
+
+	await server.register({
+		plugin: graphqlHapi,
+		options: {
+			path: '/graphql',
+			graphqlOptions: {
+				schema
+			},
+			route: {
+				cors: true
+			}
+		}
+	});
+*/
+	
 	// Vision Templates or Views
 	server.views({
 		engines: {
@@ -115,7 +112,38 @@ const init = async () => {
 		},
 		path: __dirname + '/views'
 	});
+	
 
+	// routes
+	server.route([
+		{
+			method: 'GET',
+			path: '/api/v1/tasks',
+			config: {
+				description: 'Get all the tasks',
+				tags: ['api', 'v1', 'task']
+			},
+			handler: (req, reply) => {
+				return Task.find();
+			}
+		},
+		{
+			method: 'POST',
+			path: '/api/v1/tasks',
+			config: {
+				description: 'Create a tasj',
+				tags: ['api', 'v1', 'task']
+			},
+			handler: (req, reply) => {
+				const { text } = req.payload;
+				const task = new Task({text});
+
+				return task.save();
+			}
+		}
+	]);
+
+	// server start
 	await server.start();
 	console.log(`Server running at: ${server.info.uri}`);
 };
