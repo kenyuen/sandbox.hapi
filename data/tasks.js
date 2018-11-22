@@ -1,3 +1,9 @@
+// run the following to rebuild collection against mLab instance
+/*
+ mongo ds211724.mlab.com:11724/hapidb -u app -p pass1234 ./data/tasks.js
+*/
+
+
 db.tasks.drop();
 
 db.createCollection("tasks", {
@@ -31,16 +37,24 @@ db.createCollection("tasks", {
 
 db.tasks.insert({ 
     name: "Task One",
-    description: "First Task",
+    description: "Task One",
     priority: 1,
     status: "Open"    
 });
 
 db.tasks.insert({ 
     name: "Task Two",
-    description: "First Two",
+    description: "Task Two",
     priority: 2,
     status: "Open"    
 });
+
+db.tasks.insert({ 
+    name: "Task Three",
+    description: "Task Three",
+    priority: 3,
+    status: "Open"    
+});
+
 
 db.tasks.find();
