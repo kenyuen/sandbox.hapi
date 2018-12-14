@@ -26,7 +26,6 @@
     "inert": "^5.1.2",
     "mongoose": "^5.3.12",
     "nodemon": "^1.18.6",
-    "vision": "^5.4.3",
-    "flatmap-stream":"3.3.4"
+    "vision": "^5.4.3"
   }
 }
