@@ -42,6 +42,9 @@ npm add vision hapi-swagger
 ```bash
 npm start
 
+## to initialize MongoDB instance, and if you have mongo client locally,
+npm run initdb
+
 ## If there's a need to clean up for any reason run the following
 npm uninstall *
 ```

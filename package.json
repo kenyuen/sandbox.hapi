@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "initdb": "mongo ds211724.mlab.com:11724/hapidb -u app -p pass1234 ./data/tasks.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

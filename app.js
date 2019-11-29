@@ -16,6 +16,8 @@ const server = Hapi.server({
 });
 
 // mongoose to mLab
+// mongo ds211724.mlab.com:11724/hapidb -u app -p pass1234
+
 mongoose.connect('mongodb://app:pass1234@ds211724.mlab.com:11724/hapidb', { useNewUrlParser: true });
 
 mongoose.connection.once('open', () => {
@@ -88,8 +90,8 @@ const init = async () => {
 				tags: ['api', 'v1', 'task']
 			},
 			handler: (req, reply) => {
-				const { text } = req.payload;
-				const task = new Task({text});
+				const { name, description, priority, status } = req.payload;
+				const task = new Task({name, description, priority, status});
 
 				return task.save();
 			}

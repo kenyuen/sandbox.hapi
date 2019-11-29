@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
-	text: String
+	name: String,
+	description: String,
+	priority: Number,
+	status: String
 });
 
 module.exports = mongoose.model('Task',TaskSchema);
