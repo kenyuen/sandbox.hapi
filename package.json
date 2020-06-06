@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/kenyuen/sandbox.hapi#readme",
   "dependencies": {
-    "apollo-server-hapi": "^1.4.0",
+    "apollo-server-hapi": "^2.14.2",
     "graphql": "^0.13.2",
     "hapi": "^17.7.0",
     "hapi-swagger": "^9.1.3",
